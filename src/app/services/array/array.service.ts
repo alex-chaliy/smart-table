@@ -14,7 +14,8 @@ export class ArrayService {
     outputGroupName: string,
     outputValuesName: string
   ): any {
-    const result = _( objectsArray )
+    const objectsArray_ = [...objectsArray];
+    const result = _( objectsArray_ )
       .groupBy( obj => obj[ propName ] )
       .map( (values, key) => {
         const obj = {};

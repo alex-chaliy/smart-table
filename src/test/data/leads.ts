@@ -9,7 +9,7 @@ export const leads = [
     {source: "Yahoo", time: 1550395953057, name:"Precise Leads", rpl: 10, cpl: 22, roi: 183, p_l: 3453, cost: 15000, revenueFull: 375, revenueCalls: 133, revenueLeads: 122, perOfLeads: 33, leads: 22},
     {source: "FB", time: 1558600000002, name:"Rough Web Leads", rpl: 1, cpl: 90, roi: 183, p_l: 3453, cost: 15000, revenueFull: 375, revenueCalls: 133, revenueLeads: 122, perOfLeads: 33, leads: 22},
     {source: "Yahoo", time: 1558611000003, name:"All Web Leads", rpl: 71, cpl: 53, roi: 183, p_l: 3453, cost: 15000, revenueFull: 375, revenueCalls: 133, revenueLeads: 122, perOfLeads: 33, leads: 22},
-    {source: "Google", time: 1550595953059, name:"Precise Leads", rpl: 3, cpl: 36, roi: 183, p_l: 3453, cost: 15000, revenueFull: 375, revenueCalls: 133, revenueLeads: 122, perOfLeads: 33, leads: 22},
+    {source: "Google", time: 1550595953059, name:"All Web Leads", rpl: 3, cpl: 36, roi: 183, p_l: 3453, cost: 15000, revenueFull: 375, revenueCalls: 133, revenueLeads: 122, perOfLeads: 33, leads: 22},
     {source: "FB", time: 1558600000002, name:"Precise Leads", rpl: 1, cpl: 73, roi: 183, p_l: 3453, cost: 15000, revenueFull: 375, revenueCalls: 133, revenueLeads: 122, perOfLeads: 33, leads: 22},
     {source: "Google", time: 1558611000003, name:"Rough Web Leads", rpl: 2, cpl: 34, roi: 183, p_l: 3453, cost: 15000, revenueFull: 375, revenueCalls: 133, revenueLeads: 122, perOfLeads: 33, leads: 22},
     {source: "FB", time: 1558611000003, name:"All Web Leads", rpl: 3, cpl: 11, roi: 183, p_l: 3453, cost: 15000, revenueFull: 375, revenueCalls: 133, revenueLeads: 122, perOfLeads: 33, leads: 22},
