@@ -1,0 +1,32 @@
+<h5 [hidden]="_groupedData.items[0]"> No data </h5>
+
+<div class="table">
+
+  <div class="table-head">
+		<div class="table-row table-row--dark">
+			<div class="table-col"
+				*ngFor="let col of _columns"
+				[ngStyle]="{'width': col.width + '%'}"
+      >
+        {{ col.name }}
+      </div>
+		</div>
+	</div>
+
+  <div class="table-body">
+		<div class="table-row" 
+			*ngFor="let item of _groupedData.items; let i = index"
+		>
+			<div class="table-col"
+				*ngFor="let col of _columns"
+				[ngStyle]="{'width': col.width + '%'}"
+			>
+				<span>
+          {{ item[col.mapTo] }}
+        </span>
+			</div>
+		</div>
+
+  </div>
+</div>
+

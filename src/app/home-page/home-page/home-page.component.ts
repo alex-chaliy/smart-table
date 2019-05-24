@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LeadService } from 'src/app/services/lead/lead.service';
 import { Subscription } from 'rxjs';
 import { GroupedData } from 'src/app/models/groupedData/GroupedData';
+import { ColumnService } from 'src/app/services/column/column.service';
+import { Column } from 'src/app/models/column/Column';
 
 @Component({
   selector: 'app-home-page',
@@ -9,6 +11,7 @@ import { GroupedData } from 'src/app/models/groupedData/GroupedData';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit, OnDestroy {
+  columns: Column[];
 
   level: string;
   name: string;
@@ -17,8 +20,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   leads: GroupedData;
   leadsSubscription: Subscription;
+
   constructor(
-    private leadService: LeadService
+    private leadService: LeadService,
+    private columnService: ColumnService
   ) {}
 
   ngOnInit() {
@@ -41,6 +46,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
         // @otherCases: 0, 1549395953011, undefined  
         // @info: Mar 01 2019 
     */
+
+    this.columns = 
+      this.columnService.getColumns();
 
     this.leadsSubscription = this.leadService
     .getLeads({
