@@ -5,6 +5,7 @@ import { GroupedData } from 'src/app/models/groupedData/GroupedData';
 import { ColumnService } from 'src/app/services/column/column.service';
 import { Column } from 'src/app/models/column/Column';
 import { LeadTypes } from 'src/app/models/lead/LeadTypes';
+import { LEADS_REFRESH_TIME } from 'src/app/constants/leads';
 
 @Component({
   selector: 'app-home-page',
@@ -53,18 +54,30 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.columns = 
       this.columnService.getColumns();
 
-    this.leadsSubscription = this.leadService
-    .getLeads({
-      leadType: this.leadType,
-      level_second: this.level_second,
-      level_third: this.level_third,
-      timeStart: this.timeStart,
-      timeEnd: this.timeEnd
-    })
-      .subscribe(leads => {
-        console.log('HomePageComponent: leads \n', leads);
-        this.leads = leads;
-      });
+    this.watchData();
+  }
+  watchData() {
+    this.leadsSubscription = this.getLeads();
+
+    setInterval(() => {
+      this.getLeads();
+    }, LEADS_REFRESH_TIME);
+
+  }
+
+  getLeads() {
+    return this.leadService
+      .getLeads({
+        leadType: this.leadType,
+        level_second: this.level_second,
+        level_third: this.level_third,
+        timeStart: this.timeStart,
+        timeEnd: this.timeEnd
+      })
+        .subscribe(leads => {
+          console.log('HomePageComponent: leads \n', leads);
+          this.leads = leads;
+        });
   }
 
   ngOnDestroy() {
