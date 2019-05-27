@@ -13,13 +13,23 @@ export class ColumnService {
       new Column({
         mapTo: 'source',
         name: 'Source',
-        width: 50
+        width: 100/4
       }),
       new Column({
         mapTo: 'name',
         name: 'Name',
-        width: 50
-      })
+        width: 100/4
+      }),
+      new Column({
+        mapTo: 'cpl',
+        name: 'CPL',
+        width: 100/4
+      }),
+      new Column({
+        mapTo: 'roi',
+        name: 'ROI',
+        width: 100/4
+      }),
     ];
 
     return res;

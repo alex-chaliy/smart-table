@@ -1,4 +1,7 @@
+import { LeadTypes } from './LeadTypes';
+
 export interface ILead {
+	type: LeadTypes;
 	source: string; /** @info: 1st level */
 	time: number; /** @info: 2nd level, timestamp is a number */   
 	name: string; /** @info: 3rd level */

@@ -1,25 +1,53 @@
 .table {
+    $color_level_2: #bdf;
+    $color_level_3: #fdd;
+    $level_gap: 50px;
+
+    background-color: #fff;
     margin: 20px 0;
     box-shadow: 0 2px 4px 1px rgba(0, 0, 0, .3);
+    display: table;
+    width: 100%;
+
+    .row-group {
+        display: table;
+        width: 100%;
+
+        &--second {
+            display: none;
+            background-color: $color_level_2;
+            border-top: 1px solid $color_level_2 - 50;
+            .table-col:first-child {
+                padding-left: $level_gap;
+            }
+        }
+        &--third {
+            display: none;
+            background-color: $color_level_3;
+            border-top: 1px solid $color_level_3 - 50;
+            .table-col:first-child {
+                padding-left: $level_gap * 2;
+            }
+        }
+
+        &--expanded {
+            display: table;
+            width: 100%
+        }
+    }
 
     &-row {
         clear: both;
-        border-top: 1px solid #ddd;
-        padding: 8px 16px;
-        display: flex;
-        align-items: center;
+        display: table;
+        width: 100%;
     }
-    &-row--blue {
-        background-color: #9af;
-    }
-    &-row--red {
-        background-color: #faa;
-    }
+
     &-row--dark {
         background-color: #333;
         color: #fff;
     }
     &-col {
+        padding: 10px 5px;
         float: left;
         text-align: center;
         color: inherit;
@@ -27,6 +55,10 @@
         span,
         button {
             font-size: inherit;
+        }
+        &:first-child {
+            font-weight: 700;
+            cursor: pointer;
         }
     }
 }

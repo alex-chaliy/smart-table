@@ -22,9 +22,34 @@ export class ArrayService {
         obj[ 'groupedBy' ] = propName;
         obj[ outputGroupName ] = key;
         obj[ outputValuesName ] = values;
+
+        const keyMap: string[] = Object.keys(values[0]);
+
+        _.map( keyMap, propName => {
+          const c = calcTotal(values, propName);
+          obj[propName] = c;
+          
+          if (typeof c === 'number') {
+            obj[propName] = c;
+          } else {
+            _.map(values, v => v[propName] = '');
+          }
+        });
+
         return obj;
       })
       .value();
+
     return result;
+
+    function calcTotal(items, propName): number | string {
+      let res;
+      if (typeof (items && items[0][propName]) ==='number') {
+        res = _.sumBy(items, (el) => el[propName]);
+      } else {
+        res = (items && items[0][propName]);
+      }
+      return res;
+    }
   }
 }

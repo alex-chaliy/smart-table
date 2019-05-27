@@ -10,6 +10,7 @@ import { Lead } from 'src/app/models/lead/Lead';
 import { GetLeadsSettings } from 'src/app/models/lead/GetLeadsSettings';
 
 import { ArrayService } from '../array/array.service';
+import { LeadTypes } from 'src/app/models/lead/LeadTypes';
 
 @Injectable({
   providedIn: 'root'
@@ -19,51 +20,48 @@ export class LeadService {
     private arrayService: ArrayService
   ) {}
 
-  /**
-   * @info level: 'source' | 'time' | 'name'
-   *              (levels 1 -> 2 -> 3)
-   * @info name: used when level = 'name'
-   *  to filter items instead of grouping
-   *  because in this case we have only onr level 
-   */
-  getLeads(settings: GetLeadsSettings = <GetLeadsSettings>{}): Observable<GroupedData> {
-    const {level, name, timeStart, timeEnd} = settings;
+  getLeads(settings: GetLeadsSettings = <GetLeadsSettings>{}): Observable<GroupedData[]> {
+    const {leadType, level_second, level_third, timeStart, timeEnd} = settings;
 
-    let res: GroupedData;
-    const leads_ = (!!timeStart && !!timeEnd) ? 
+    let res: GroupedData[];
+    let leads_ = (!!timeStart && !!timeEnd) ? 
       this.filterDate(leads, timeStart, timeEnd) : [...leads];
 
-    switch (level) {
-      case 'source':
-        res = this.arrayService.groupObjectsBy('source', leads_, 'groupName', 'items')
-          .map(group => {
-            group['items'] = this.arrayService.groupObjectsBy('time', group['items'], 'groupName', 'items');
-            return group;
-          });
-        break;
+    if (leadType) {
+      leads_ = _.filter(leads_, l => l.type === leadType);
+    }
 
-      case 'time':
-        res = this.arrayService.groupObjectsBy('time', leads_, 'groupName', 'items');
-        break;
+    if (level_second && level_third) {
+      res = this.arrayService
+        .groupObjectsBy(level_second, leads_, 'groupName', 'items')
+        .map(group => {
+          group['items'] = this.arrayService
+            .groupObjectsBy(level_third, group['items'], 'groupName', 'items');
+          return group;
 
-      case 'name':
-        res = new GroupedData({
-          items: _.filter(leads_, {name: name}),
-          groupedBy: 'name',
-          groupName: name
         });
-        break;
 
-      default:
-        res = new GroupedData({
+    } else if (level_second) {
+      res = this.arrayService
+        .groupObjectsBy(level_second, leads_, 'groupName', 'items');
+
+    } else {
+      res = [
+        {
           items: leads_,
           groupedBy: '',
           groupName: 'default'
-        });
-        break;
+        }
+      ];
     }
 
     return of(res);
+  }
+
+  getLeadTypes(): LeadTypes[] {
+    return [
+      'Buyers', 'Campaigns', 'Daily', 'Hourly'
+    ];
   }
 
   private filterDate(leads: Lead[], timeStart: number, timeEnd: number): Lead[] {

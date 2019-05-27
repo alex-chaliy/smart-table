@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { GroupedData } from 'src/app/models/groupedData/GroupedData';
 import { ColumnService } from 'src/app/services/column/column.service';
 import { Column } from 'src/app/models/column/Column';
+import { LeadTypes } from 'src/app/models/lead/LeadTypes';
 
 @Component({
   selector: 'app-home-page',
@@ -13,12 +14,14 @@ import { Column } from 'src/app/models/column/Column';
 export class HomePageComponent implements OnInit, OnDestroy {
   columns: Column[];
 
-  level: string;
-  name: string;
+  leadType: LeadTypes;
+  level_second: string;
+  level_third: string;
+
   timeStart: number;
   timeEnd: number;
 
-  leads: GroupedData;
+  leads: GroupedData[];
   leadsSubscription: Subscription;
 
   constructor(
@@ -33,10 +36,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
      *       cover all needed cases 
      */
     /*
-      this.level = 'name'; // @otherCases: 'sourece', 'time', undefined   
-                           // @info: see levels in ILead interface  
-
-      this.name = 'Precise Leads'; // @otherCases: '', undefined
 
       this.timeStart = 1549395953011;
         // @otherCases: 0, 1551395953011, undefined
@@ -47,13 +46,18 @@ export class HomePageComponent implements OnInit, OnDestroy {
         // @info: Mar 01 2019 
     */
 
+    this.leadType = 'Campaigns';
+    this.level_second = 'source';
+    this.level_third = 'name';
+
     this.columns = 
       this.columnService.getColumns();
 
     this.leadsSubscription = this.leadService
     .getLeads({
-      level: this.level,
-      name: this.name,
+      leadType: this.leadType,
+      level_second: this.level_second,
+      level_third: this.level_third,
       timeStart: this.timeStart,
       timeEnd: this.timeEnd
     })

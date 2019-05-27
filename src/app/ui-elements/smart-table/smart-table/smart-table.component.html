@@ -1,4 +1,4 @@
-<h5 [hidden]="_groupedData.items[0]"> No data </h5>
+<h5 [hidden]="_groupedData && _groupedData[0]"> No data </h5>
 
 <div class="table">
 
@@ -13,20 +13,67 @@
 		</div>
 	</div>
 
-  <div class="table-body">
-		<div class="table-row" 
-			*ngFor="let item of _groupedData.items; let i = index"
-		>
-			<div class="table-col"
+  <div class="table-body" *ngIf="_groupedData">
+		<div *ngFor="let group of _groupedData; let gd_i = index" class="table-row-group">
+
+			<div class="table-col" 
+    			(click)="switchExpanded('group_' + gd_i)"
+
 				*ngFor="let col of _columns"
 				[ngStyle]="{'width': col.width + '%'}"
 			>
 				<span>
-          {{ item[col.mapTo] }}
-        </span>
+					{{ group[col.mapTo] }}   
+				</span>
+			</div>
+
+
+			<div class="row-group"
+				[id]="'group_' + gd_i" 
+
+				*ngFor="let item of group.items; let g_i = index"
+				[ngClass]="{'row-group--second': _groupedData.length > 1}"
+			>
+
+				<div class="col-wrapper">
+					<div class="table-col"
+    					(click)="switchExpanded('group_' + gd_i + '_' + g_i)"
+
+ 						*ngFor="let col of _columns"
+						[ngStyle]="{'width': col.width + '%'}"
+					>
+						<span>
+							{{ item[col.mapTo] }}
+						</span>
+					</div>
+
+				</div>
+
+				<!-- @info: in this case, item is a group -->
+
+				<div *ngIf="item.items && item.items.length > 0" 
+					[id]="'group_' + gd_i + '_' + g_i"
+
+					class="row-group row-group--third"
+				>
+					<div *ngFor="let data of item.items" class="table-row">
+
+						<div class="table-col"
+							*ngFor="let col of _columns"
+							[ngStyle]="{'width': col.width + '%'}"
+						>
+							<span>
+								{{ data[col.mapTo] }}
+							</span>
+						</div>
+					</div>
+
+				</div>
+
+
 			</div>
 		</div>
 
-  </div>
+	</div>
 </div>
 

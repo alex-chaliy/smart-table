@@ -1,6 +1,8 @@
 import { ILead } from './ILead';
+import { LeadTypes } from './LeadTypes';
 
 export class Lead implements ILead {
+    type: LeadTypes;
 	source: string;
 	time: number;
 	name: string;
@@ -17,6 +19,7 @@ export class Lead implements ILead {
 	rpl: number;
     
     constructor(o: ILead = <ILead>{}) {
+        this.type = o.type || '';
         this.source = o.source || '';
         this.time = o.time || 0;
         this.name = o.name || '';
