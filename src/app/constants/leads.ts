@@ -1,1 +1,1 @@
-export const LEADS_REFRESH_TIME: number = 30000;
+export const LEADS_REFRESH_TIME: number = 15000;
